@@ -1,4 +1,5 @@
 const SHA256 = require('crypto-js/sha256');
+const cryp = require('crypto');
 
 class Block{
     constructor(index,timestamp,data,previousHash = ''){
@@ -15,12 +16,17 @@ class Block{
     }
 
     mineBlock(difficulty){
-        while(this.hash.substring(0, difficulty) !== Array(difficulty+1).join("0")){
+        let dif = this.generateDif(difficulty);
+        while(this.hash.substring(0, difficulty*2) !== dif){
             this.nonce++;
             this.hash = this.calculateHash();
         }
-
         console.log("Block mined: "+this.hash);
+    }
+
+    generateDif(difficulty){
+        let chars = cryp.randomBytes(difficulty).toString('hex');
+        return chars;
     }
 }
 
@@ -29,7 +35,7 @@ class Block{
 class Blockchain{
     constructor(){
         this.chain = [this.createGenesisBlock()];
-        this.difficulty = 5;
+        this.difficulty = 2;
     }
 
     createGenesisBlock(){
@@ -75,3 +81,4 @@ for(let i = 1;i<=10;i++){
 
 
 console.log(JSON.stringify(herikleCoin,null,4));
+
