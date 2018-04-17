@@ -7,10 +7,20 @@ class Block{
         this.data = data;
         this.previousHash = previousHash;
         this.hash = this.calculateHash();
+        this.nonce = 0;
     }
 
     calculateHash(){
-        return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)).toString();
+        return SHA256(this.index + this.previousHash + this.timestamp + this.nonce + JSON.stringify(this.data)).toString();
+    }
+
+    mineBlock(difficulty){
+        while(this.hash.substring(0, difficulty) !== Array(difficulty+1).join("0")){
+            this.nonce++;
+            this.hash = this.calculateHash();
+        }
+
+        console.log("Block mined: "+this.hash);
     }
 }
 
@@ -19,10 +29,11 @@ class Block{
 class Blockchain{
     constructor(){
         this.chain = [this.createGenesisBlock()];
+        this.difficulty = 5;
     }
 
     createGenesisBlock(){
-        return new Block(0,"01/01/2018","Genesis block","0");
+        return new Block(0,Date.now,"Genesis block","0");
     }
 
     getLatesBlock(){
@@ -31,16 +42,36 @@ class Blockchain{
 
     addBlock(newBlock){
         newBlock.previousHash = this.getLatesBlock().hash;
-        newBlock.hash = newBlock.calculateHash();
+        newBlock.mineBlock(this.difficulty);
         this.chain.push(newBlock);
+    }
+
+    isChainValid(){
+        for(let i = 1;i< this.chain.length;i++){
+            const currentBlock = this.chain[i];
+            const previousHash = this.chain[i-1];
+
+            if(currentBlock.hash !==currentBlock.calculateHash()){
+                return false;
+            }
+
+            if(currentBlock.previousHash !== previousHash.hash){
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 
 
 
 let herikleCoin = new Blockchain();
-herikleCoin.addBlock(new Block(1,"17/04/2018",{amount:4}));
-herikleCoin.addBlock(new Block(2,"15/04/2018",{amount:10}));
-herikleCoin.addBlock(new Block(3,"11/04/2018",{amount:17}));
+console.log("------ START MINING ------");
+for(let i = 1;i<=10;i++){
+    console.log('Mining block '+i+'...');
+    herikleCoin.addBlock(new Block(i,Date.now,{amount:i}));
+}
+
 
 console.log(JSON.stringify(herikleCoin,null,4));
