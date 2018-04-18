@@ -26,7 +26,7 @@ class Blockchain{
 
         this.pendingTransactions = [
             new Transaction(null,miningRewardAddress,this.miningReward)
-        ];
+        ]
 
     }
 
@@ -49,7 +49,7 @@ class Blockchain{
             }
         }
 
-        return balance;
+        return balance
     }
 
     isChainValid(){

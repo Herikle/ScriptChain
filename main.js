@@ -9,5 +9,6 @@ let fake = new FakeTransactions(herikleCoin)
 
 fake.createFakeTransMining(20) //Fake miners count
 
-console.log(JSON.stringify(herikleCoin,null,4));
+
+console.log(JSON.stringify(herikleCoin,null,4))
 
