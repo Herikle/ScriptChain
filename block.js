@@ -16,7 +16,7 @@ class Block{
 
     mineBlock(difficulty){
         let dif = this.generateDif(difficulty)
-        while(this.hash.substring(0, (difficulty*2)) !== dif){
+        while(this.hash.substring(0, difficulty) !== dif){
             this.nonce++
             this.hash = this.calculateHash()
         }
@@ -25,7 +25,8 @@ class Block{
 
     generateDif(difficulty){
         let chars = cryp.randomBytes(difficulty).toString('hex')
-        return chars
+        let initial = chars.substring(0,difficulty);
+        return initial
     }
 }
 
