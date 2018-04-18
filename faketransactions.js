@@ -7,25 +7,25 @@ class FakeTransactions{
         this.addressess = []
         this.blockchain = blockchain
         for(let i = 0;i<10;i++){
-            this.insertAddress();
+            this.insertAddress()
         }
     }
 
     
     createFakeTransMining(minings){
         console.log("Start transactions...")
-        let transCount = this.getRandomInt(10);
+        let transCount = this.getRandomInt(10)
         for(let i=0;i<transCount;i++){
             if(this.getRandomInt(100)===1){
-                this.insertAddress();
+                this.insertAddress()
             }
-            let from = this.getRandomInt(this.addressess.length);
-            let fromAddress = this.addressess[from];
+            let from = this.getRandomInt(this.addressess.length)
+            let fromAddress = this.addressess[from]
             let to
             do{
-                to = this.getRandomInt(this.addressess.length);
-            }while(from===to);
-            let toAddress = this.addressess[to];
+                to = this.getRandomInt(this.addressess.length)
+            }while(from===to)
+            let toAddress = this.addressess[to]
             this.blockchain.createTransaction(new Transaction(fromAddress,toAddress,this.getRandomInt(100)))
         }
         console.log("\nStart mining...")
@@ -39,7 +39,7 @@ class FakeTransactions{
 
 
     insertAddress(){
-        let address = this.generateRandomAddress();
+        let address = this.generateRandomAddress()
         if(!this.addressExist(address)){
             this.addressess.push(address)
         }
@@ -48,15 +48,15 @@ class FakeTransactions{
     addressExist(adr){
         for(const address in this.addressess){
             if(address===adr){
-                return true;
+                return true
             }
         }
-        return false;
+        return false
     }
 
     generateRandomAddress(){
         let address = cryp.randomBytes(2).toString('hex')
-        return address;
+        return address
     }
 
     getRandomInt(max){

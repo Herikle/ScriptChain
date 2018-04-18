@@ -7,7 +7,7 @@ let herikleCoin = new Blockchain()
 
 let fake = new FakeTransactions(herikleCoin)
 
-fake.createFakeTransMining(5) //Fake miners count
+fake.createFakeTransMining(10) //Fake miners count
 
-console.log(JSON.stringify(herikleCoin,null,4));
+console.log(JSON.stringify(herikleCoin,null,4))
 
