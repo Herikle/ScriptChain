@@ -14,7 +14,7 @@ class FakeTransactions{
     
     createFakeTransMining(minings){
         console.log("Start transactions...")
-        let transCount = this.getRandomInt(10)
+        let transCount = this.getRandomInt(10)+1
         for(let i=0;i<transCount;i++){
             if(this.getRandomInt(100)===1){
                 this.insertAddress()
